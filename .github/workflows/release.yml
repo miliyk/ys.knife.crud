@@ -53,6 +53,5 @@ jobs:
 
       - name: Publish to npm
         # -r 递归发布：private 包自动跳过；已发布过的版本 pnpm 会自动跳过
-        # --workspace-concurrency=1 串行发布，避免一个包的 OIDC 认证失败连带中断后续包
         # publishConfig 中的 registry/provenance/access 覆盖 .npmrc 镜像源并启用 OIDC 认证
-        run: pnpm -r publish --no-git-checks --workspace-concurrency=1
+        run: pnpm -r publish --no-git-checks
