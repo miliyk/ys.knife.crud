@@ -1,6 +1,6 @@
 {
   "name": "@ys-knife-crud/react",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React hooks for ys.knife.crud (column config, excel export, row actions, row selection) — UI-library agnostic",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -16,6 +16,11 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
   "sideEffects": false,
   "keywords": [
     "crud",

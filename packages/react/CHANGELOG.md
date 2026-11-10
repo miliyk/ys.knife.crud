@@ -1,5 +1,18 @@
 # @ys-knife-crud/react
 
+## 0.0.9
+
+### Patch Changes
+
+- chore(release): 全仓统一发布 0.0.9
+
+  - taro：发布 .vue 源码并配置宿主编译，修复 YsInfinitePage 滚动不生效
+  - react / antd：随全仓版本对齐
+  - core / vue / element-plus / export-exceljs / import-exceljs：随全仓版本对齐
+
+- Updated dependencies
+  - @ys-knife-crud/core@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes
