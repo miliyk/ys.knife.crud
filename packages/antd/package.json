@@ -1,6 +1,6 @@
 {
   "name": "@ys-knife-crud/antd",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React + antd UI components for ys.knife.crud",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -17,6 +17,11 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
   "sideEffects": [
     "**/*.css"
   ],
