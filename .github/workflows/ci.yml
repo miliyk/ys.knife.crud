@@ -8,6 +8,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # 仓库 .npmrc 使用国内镜像（npmmirror）加速本地安装，但 GitHub runner 在境外，
+    # 访问该镜像经常超时导致安装失败，CI 内强制走官方源
+    env:
+      NPM_CONFIG_REGISTRY: https://registry.npmjs.org/
     steps:
       - uses: actions/checkout@v4
       # 不指定 version：读取根 package.json 的 packageManager（pnpm@9.15.9），避免动态解析 latest 9.x
