@@ -173,6 +173,22 @@ function onReset(): void { pageRef.value?.reload(); }
 4. **CommandBar 的 TableAction.execute() 里 table 参数是 undefined**——闭包抓 `pageRef`（如 `pageRef.value?.reload()`）。
 5. **InfinitePage 不自动联调 search → reload**——业务侧需要自己在 `@search` / `@reset` 回调里调 `pageRef.reload()`，因为不同业务查询后可能需要额外处理（如重置分页偏移量、清空选中）。
 6. **底部 CommandBar 用 `position: fixed` 固定在视口底部**——不依赖 `100vh` 与可视高度是否一致，任何机型/工具栏形态下都停留在可视区域；列表容器已预留 `padding-bottom`，但如果你在 `cmd-default` 插槽里塞了多行内容让命令条变高，需要自己调大预留值（默认按单行 96rpx 计算）。
+7. **宿主项目必须让 Taro 编译本库源码（否则 `scroll-view` 不生成 WXML、列表滚动不工作）**——本包运行时发布的是 `.vue` 源码，`scroll-view` / `input` 等原生组件要由宿主 Taro 编译器在编译期扫到才会生成 WXML。若宿主开启了依赖预打包、把本库当成 opaque JS 处理，库内的 `scroll-view` 会渲染成惰性节点、`@scrolltolower` 永不触发。在宿主的 `config/index.ts` 里加：
+
+```ts
+compiler: {
+  type: "webpack5",
+  prebundle: {
+    // 排除本库，避免预打包后 Taro 模板编译器扫不到库内原生组件
+    exclude: ["@ys-knife-crud/taro", "@ys-knife-crud/core"],
+  },
+},
+framework: "vue3",
+// 让 vue-loader / babel 处理 node_modules 内本库的 .vue / .ts 源码
+esnextModules: ["@ys-knife-crud/taro"],
+```
+
+同时确保宿主的 `@tarojs/plugin-framework-vue3` 的 vue-loader 规则会处理该 node_modules 路径下的 `.vue`；个别版本仍需追加 `mini.webpackChain` 把 `node_modules/@ys-knife-crud/taro` 纳入 `.vue` 编译 include。改完用 `taro build --type weapp` 重新构建，在开发者工具确认列表可滚动、触底翻页正常。
 
 ## 与 element-plus 版的 `YsTablePage` 的差异
 
